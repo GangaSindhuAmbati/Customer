@@ -1,0 +1,12 @@
+# Databricks DLT Project Dependencies
+
+# Testing
+pytest==7.4.0
+chispa==0.9.4
+pyspark==3.5.0
+
+# Data Quality
+great-expectations==0.18.0
+
+# Utilities
+pyyaml==6.0.1

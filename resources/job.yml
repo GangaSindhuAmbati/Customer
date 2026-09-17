@@ -1,0 +1,40 @@
+# Databricks Asset Bundle - Job Configuration
+# Job that orchestrates the Customer Medallion Pipeline
+# NOTE: Renamed job key to avoid conflict with pipeline resource of the same name
+
+resources:
+  jobs:
+    customer_medallion_job:
+      name: customer_medallion_job
+
+      # Job-level configuration
+      max_concurrent_runs: 1
+      timeout_seconds: 7200  # 2 hours
+
+      # Email notifications
+      email_notifications:
+        on_failure:
+          - ambati-ganga.sindhu@capgemini.com
+        on_success:
+          - ambati-ganga.sindhu@capgemini.com
+
+      # Schedule: Run daily at 2 AM
+      schedule:
+        quartz_cron_expression: "0 0 2 * * ?"
+        timezone_id: "America/Los_Angeles"
+        pause_status: "UNPAUSED"
+
+      # Single task that triggers the DLT pipeline
+      # References the pipeline resource defined in pipeline.yml via bundle
+      tasks:
+        - task_key: run_medallion_pipeline
+          pipeline_task:
+            pipeline_id: ${resources.pipelines.customer_medallion_pipeline.id}
+            full_refresh: false  # Incremental refresh by default
+          timeout_seconds: 7200
+
+      # Tags for organization
+      tags:
+        environment: production
+        project: customer-medallion
+        owner: data-engineering
