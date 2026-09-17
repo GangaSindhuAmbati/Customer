@@ -1,0 +1,36 @@
+# Databricks Asset Bundle Configuration
+bundle:
+  name: customer-dlt-project
+
+include:
+  - resources/*.yml
+
+# Target environments
+targets:
+  development:
+    mode: development
+    default: true
+    workspace:
+      host: https://dbc-55f9ced3-ad31.cloud.databricks.com
+    variables:
+      catalog: workspace
+      schema: customer_demo
+
+  production:
+    mode: production
+    workspace:
+      host: https://dbc-55f9ced3-ad31.cloud.databricks.com
+      root_path: /Workspace/Users/${workspace.current_user.userName}/.bundle/${bundle.name}/${bundle.target}
+    variables:
+      catalog: workspace
+      schema: customer_demo
+
+# Variables
+variables:
+  catalog:
+    description: Unity Catalog name
+    default: workspace
+
+  schema:
+    description: Target schema name
+    default: customer_demo

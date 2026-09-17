@@ -1,0 +1,28 @@
+resources:
+  pipelines:
+    customer_medallion_pipeline:
+      name: "unittestdemoPL"
+      catalog: "${var.catalog}"
+      schema: "${var.schema}"
+      serverless: true
+
+      libraries:
+        - notebook:
+            path: ../src/bronze_customer
+        - notebook:
+            path: ../src/silver_customer
+        - notebook:
+            path: ../src/gold_customer_scd1
+        - notebook:
+            path: ../src/gold_customer_scd2
+        - notebook:
+            path: ../src/gold_customer_aggregates
+
+      configuration:
+        "pipelines.enableAutoLoader": "true"
+        "spark.databricks.delta.schema.autoMerge.enabled": "true"
+
+      channel: CURRENT
+      edition: ADVANCED
+      continuous: false
+      development: true
