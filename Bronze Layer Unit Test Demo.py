@@ -2,6 +2,7 @@
 # DBTITLE 1,Cell 1: Bronze Layer Production Code
 # ============================================================================
 # CELL 1: Bronze Layer Production Code
+# Deployed via Databricks-native Git integration (runGit API — no Git Bash required)
 # These are the real functions that would live in src/bronze/bronze_customer.py
 # They define the Bronze layer logic for customer data ingestion.
 # ============================================================================
